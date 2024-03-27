@@ -67,7 +67,7 @@ public class ContactService {
 
             return ServletUriComponentsBuilder
                     .fromCurrentContextPath()
-                    .path("/contacts/image/" + fileName).toUriString();
+                    .path("/api/contacts/image/" + fileName).toUriString();
         } catch (Exception ex) {
             throw new RuntimeException("unable to save image");
         }
