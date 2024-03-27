@@ -10,6 +10,7 @@ import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
 import org.example.contact_list_backend.domain.Contact;
 import org.example.contact_list_backend.repo.ContactRepo;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -26,6 +27,9 @@ import static org.example.contact_list_backend.constant.Constant.PHOTO_DIRECTORY
 public class ContactService {
 
     private final ContactRepo contactRepo;
+
+    @Value("${AppConfig.host}")
+    private String currentHost;
 
     public Page<Contact> getAllContacts(int page, int size) {
         return contactRepo.findAll(PageRequest.of(page, size, Sort.by("name")));
@@ -65,9 +69,11 @@ public class ContactService {
             }
             Files.copy(image.getInputStream(), fileStorageLocation.resolve(fileName), REPLACE_EXISTING);
 
-            return ServletUriComponentsBuilder
+            /* return ServletUriComponentsBuilder
                     .fromCurrentContextPath()
-                    .path("/api/contacts/image/" + fileName).toUriString();
+                    .path("/api/contacts/image/" + fileName).toUriString(); */
+
+            return this.currentHost + "/api/contacts/image/" + fileName;
         } catch (Exception ex) {
             throw new RuntimeException("unable to save image");
         }
