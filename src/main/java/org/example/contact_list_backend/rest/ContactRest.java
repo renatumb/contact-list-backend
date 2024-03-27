@@ -22,7 +22,7 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
 @Tag(name = "Contact", description = "The contact API")
 @RestController
-@RequestMapping("/contacts")
+@RequestMapping("/api/contacts")
 @RequiredArgsConstructor
 public class ContactRest {
 
