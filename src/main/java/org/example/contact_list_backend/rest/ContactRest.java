@@ -7,6 +7,11 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Locale;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.example.contact_list_backend.domain.Contact;
 import org.example.contact_list_backend.service.ContactService;
@@ -71,5 +76,16 @@ public class ContactRest {
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage() );
         }
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity status() {
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of(
+                "status", "OK",
+                "LocalTime", LocalDateTime.now(),
+                "ZonedDateTime", ZonedDateTime.now(),
+                "Locale", Locale.getDefault(),
+                "Zone", ZoneId.systemDefault()
+        ));
     }
 }
